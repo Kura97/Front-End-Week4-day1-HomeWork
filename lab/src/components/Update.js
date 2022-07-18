@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
@@ -6,10 +6,15 @@ function Update() {
     const [id, setId] = useState(null) //عشان اول ما افتح الجهاز بتكون القيمة نل
     const [toDo, setToDo] = useState("")
     const navigate = useNavigate("")
+
+    useEffect(() => {
+      setId(localStorage.getItem("id"));
+      setToDo(localStorage.getItem("toDo"));
+    }, []);
  
       const updateData = () => {
         axios
-          .update(`https://62d3e34acd960e45d44f7cdf.mockapi.io/fakeAPI/${id}`, {
+          .put(`https://62d3e34acd960e45d44f7cdf.mockapi.io/fakeAPI/${id}`, {
             toDo
           })
           .then((res) => {
